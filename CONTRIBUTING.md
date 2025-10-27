@@ -36,15 +36,19 @@ Or use the provided script:
 ```
 SCRAPING-PROMILES/
 ├── app/
+│   ├── __init__.py          # Package initialization
 │   ├── main.py              # FastAPI application entry point
 │   ├── models/
+│   │   ├── __init__.py      # Models package initialization
 │   │   └── flight.py        # Pydantic models for data validation
 │   ├── scrapers/
+│   │   ├── __init__.py      # Scrapers package initialization
 │   │   ├── base_scraper.py  # Abstract base class for all scrapers
 │   │   ├── latam_scraper.py # LATAM airline scraper
 │   │   ├── gol_scraper.py   # GOL airline scraper
 │   │   └── azul_scraper.py  # AZUL airline scraper
 │   └── routes/
+│       ├── __init__.py      # Routes package initialization
 │       └── scrape.py        # API route definitions
 ├── example_usage.py         # Example API usage
 ├── test_extraction.py       # Extraction method tests
@@ -78,10 +82,13 @@ class NewAirlineScraper(BaseScraper):
     async def scrape_with_library(self, origin: Optional[str] = None,
                                    destination: Optional[str] = None,
                                    departure_date: Optional[str] = None) -> Dict:
-        """Implement library-based scraping with BeautifulSoup"""
+        """Implement library-based scraping with BeautifulSoup
+        
+        Note: The project uses 'lxml' parser which is included in requirements.txt
+        """
         try:
             html = await self.fetch_page(self.base_url)
-            soup = BeautifulSoup(html, 'lxml')
+            soup = BeautifulSoup(html, 'lxml')  # lxml parser is specified in requirements.txt
             
             # Your scraping logic here
             price_reais = None
